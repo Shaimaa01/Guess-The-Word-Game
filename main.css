@@ -65,20 +65,55 @@ h1 {
                 &.yes-in-place {
                     background-color: #f89e13;
                     border: #f89e13;
-                    color:white
+                    color: white
                 }
 
                 &.not-in-place {
                     background-color: #18ba89;
                     border: #18ba89;
-                    color:white
+                    color: white
                 }
 
                 &.no {
                     background-color: #27303f;
                     border: #27303f;
-                    color:white;
+                    color: white;
                 }
+            }
+        }
+
+        .control {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 300px;
+            margin: 5px auto;
+            gap: 10px;
+
+            .check {
+                background-color: var(--primary-color);
+                flex: 1;
+            }
+
+            .hint {
+                background-color: #009688;
+                width: fit-content;
+            }
+
+            button {
+                border: none;
+                font-size: 20px;
+                padding: 10px 20px;
+                border-radius: 6px;
+                color: white;
+                cursor: pointer;
+                font-weight: bold;
+            }
+
+            button:disabled {
+                background-color: black;
+                opacity: 0.4;
+                cursor: no-drop;
             }
         }
     }
@@ -117,12 +152,30 @@ h1 {
         }
     }
 }
+
+.message {
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+
+    span {
+        font-weight: bold;
+        display: block;
+        font-size: 50px;
+        color: var(--primary-color);
+        text-transform: capitalize;
+        margin-top: 10px;
+    }
+
+    p {
+        margin-top: 15px;
+    }
 }
 
 footer {
     text-align: center;
     padding: 20px;
-    position: fixed;
+    /* position: fixed; */
     bottom: 0;
     left: 0;
     width: 100%;
