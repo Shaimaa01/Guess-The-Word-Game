@@ -114,6 +114,9 @@ function handleGuesses() {
   // Check If User Win Or Lose
   if (successGuess) {
     messageArea.innerHTML = `You Win The Word Is <span>${wordToGuess}</span>`;
+    if (numberOfHints === 2) {
+      messageArea.innerHTML = `<p>Congratz You Did not Use Hints 🎉🎉🎉 </p>`;
+    }
 
     // Disabled All Inputs
     let allTries = document.querySelectorAll(".inputs > div");
@@ -121,6 +124,7 @@ function handleGuesses() {
 
     // Disabled Guess Button
     guessButton.disabled = true;
+    getHintButton.disabled = true;
   } else {
     document
       .querySelector(`.try-${currentTry}`)
@@ -144,6 +148,7 @@ function handleGuesses() {
     } else {
       //  Disabled Guess Button
       guessButton.disabled = true;
+      getHintButton.disabled = true;
       messageArea.innerHTML = `You Lose The Word Is <span>${wordToGuess}</span>`;
     }
   }
@@ -154,26 +159,46 @@ function getHint() {
     numberOfHints--;
     document.querySelector(".hint span").innerHTML = numberOfHints;
   }
-
   if (numberOfHints === 0) {
     getHintButton.disabled = true;
   }
 
   const enabledInputs = document.querySelectorAll("input:not([disabled])");
-  const emptyEnaledInputs = Array.from(enabledInputs).filter(
+  // console.log(enabledInputs);
+  const emptyEnabledInputs = Array.from(enabledInputs).filter(
     (input) => input.value === ""
   );
+  // console.log(emptyEnabledInputs);
 
-  if (emptyEnaledInputs.length > 0) {
-    const randomIndex = Math.floor(Math.random() * emptyEnaledInputs.length);
-    const randomInput = emptyEnaledInputs[randomIndex];
-    const indexToFill = Array.from(emptyEnaledInputs).indexOf(randomInput);
-    console.log(indexToFill)
-    if(indexToFill !== -1){
+  if (emptyEnabledInputs.length > 0) {
+    const randomIndex = Math.floor(Math.random() * emptyEnabledInputs.length);
+    const randomInput = emptyEnabledInputs[randomIndex];
+    const indexToFill = Array.from(enabledInputs).indexOf(randomInput);
+    // console.log(randomIndex);
+    // console.log(randomInput);
+    // console.log(indexToFill);
+    if (indexToFill !== -1) {
       randomInput.value = wordToGuess[indexToFill].toUpperCase();
     }
   }
 }
+
+function handleBackSpace(event) {
+  if (event.key === "Backspace") {
+    const inputs = document.querySelectorAll("input:not([disabled]");
+    const currentIndex = Array.from(inputs).indexOf(document.activeElement); // Or this
+    // console.log(currentIndex)
+    if (currentIndex > 0) {
+      const currentInput = inputs[currentIndex];
+      const prevInput = inputs[currentIndex - 1];
+      currentInput.value = "";
+      prevInput.value = "";
+      prevInput.focus()
+    }
+  }
+}
+
+document.addEventListener("keydown", handleBackSpace);
 
 window.onload = function () {
   generateInput();
